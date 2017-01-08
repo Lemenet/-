@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    #container
+    {
+        width: 300px;
+        height: 300px;
+        position: relative;
+        margin: 100px auto;
+        background: #cccccc;
+        overflow: hidden;
+    }
+    #Text
+    {
+        width: 280px;
+        position: absolute;
+    }
+    #scrollBar
+    {
+        width: 20px;
+        height: 300px;
+        background: #c0c0c0;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+
+    }
+    #bar
+    {
+        width: 20px;
+        height: 20px;
+        background: #ff0000;
+        position: absolute;
+        cursor: pointer;
+    }
+</style>
+<body>
+
+<div id = "container">
+    <div id="Text">
+        哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+        哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+        哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
+    </div>
+    <div id="scrollBar">
+        <div id="bar"></div>
+    </div>
+</div>
+<script>
+    var oBar = document.getElementById("bar");
+    var oScroll = document.getElementById("scrollBar");
+    var oText = document.getElementById("Text");
+    oBar.onmousedown = function(e){
+        var iDistanceY = e.clientY - oBar.offsetTop;
+        document.onmousemove = function(e){
+            var Distance = e.clientY -iDistanceY;
+            if(Distance <= 0)
+            {
+                Distance = 0;
+            }
+            if( Distance >= oScroll.offsetHeight - oBar.offsetHeight)
+            {
+                Distance = oScroll.offsetHeight - oBar.offsetHeight;
+            }
+            oBar.style.top = Distance + "px";
+
+            var fScale = Distance/(oScroll.offsetHeight - oBar.offsetHeight);
+            oText.style.top = -fScale *(oText.offsetHeight - oScroll.offsetHeight) + "px";
+
+            return false;
+        }
+    }
+
+    document.onmouseup = function(){
+        document.onmousemove = null;
+    }
+</script>
+</body>
+</html>
