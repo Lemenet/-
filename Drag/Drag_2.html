@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>多方块拖拽</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            background: #ffaa00;
+            position: absolute;
+            cursor: pointer;
+        }
+        #div1{
+            top: 0px;
+            left: 0px;
+        }
+        #div2{
+            top: 120px;
+            left: 0px;
+        }
+        #div3{
+            top: 240px;
+            left: 0px;
+        }
+        #div4{
+            top: 360px;
+            left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">1111</div>
+    <div id="div2">2222</div>
+    <div id="div3">3333</div>
+    <div id="div4">4444</div>
+
+    <script>
+        var aDivS = document.getElementsByTagName("div");
+        for(var i = 0; i < aDivS.length; ++i)
+        {
+            aDivS[i].onmousedown = function(e)
+            {
+                e = e || window.event;
+                var iDistanceX = e.clientX - this.offsetLeft;
+                var iDistanceY = e.clientY - this.offsetTop;
+                var currentDiv = this;
+                document.onmousemove = function(e)
+                {
+                    currentDiv.style.left = e.clientX - iDistanceX + "px";
+                    currentDiv.style.top = e.clientY - iDistanceY + "px";
+                    return false;
+                }
+            }
+        }
+
+        document.onmouseup = function()
+        {
+            document.onmousemove = null;
+        }
+    </script>
+</body>
+</html>
