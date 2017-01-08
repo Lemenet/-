@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>我的无缝滚动轮播图</title>
+    <style>
+        *
+        {
+            margin: 0;
+            padding: 0;
+        }
+
+        #main
+        {
+            width: 520px;
+            height: 280px;
+            margin: 200px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        #control
+        {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+        #number
+        {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+        #control span, #number span
+        {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            background: #000;
+            color: #ffffff;
+            display: block;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+        }
+        #number .selected
+        {
+            background: #ffaa00;
+        }
+        #imageContent
+        {
+            width: 2600px;
+            position: absolute;
+            left: 0px;
+        }
+        #imageContent img
+        {
+            width: 520px;
+            height: 280px;
+            background: #000000;
+            color: #ffffff;
+            display: block;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div id = "main">
+        <div id="imageContent">
+            <img class = "selected" src="img/1.jpg" alt=""/>
+            <img src="img/2.jpg" alt=""/>
+            <img src="img/3.jpg" alt=""/>
+            <img src="img/4.jpg" alt=""/>
+            <img src="img/1.jpg" alt=""/>
+        </div>
+
+        <div id="control">
+            <span id = "prev">&lt;</span>
+            <span id = "next">&gt;</span>
+        </div>
+        <div id="number">
+            <span class = "selected">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+        </div>
+    </div>
+
+    <script src = "jslib.js"></script>
+    <script>
+        var container = document.getElementById("main");
+        var numberDiv = document.getElementById("number");
+        var aNumberS = numberDiv.getElementsByTagName("span");
+        var imageDIv = document.getElementById("imageContent");
+        var aImageS = imageDIv.getElementsByTagName("img");
+        var prev = document.getElementById("prev");
+        var next = document.getElementById("next");
+        var currentIndex = 0;
+        var moveDelta = 1;
+        var timer;
+
+        for(var i =0; i < aNumberS.length; ++i)
+        {
+            aNumberS[i].index = i;
+            aNumberS[i].onmouseover = function()
+            {
+                currentIndex = this.index;
+                changeImage();
+            }
+        }
+
+        prev.onclick = next.onclick = function()
+        {
+            if(this == next) {
+                currentIndex++;
+                if (currentIndex > (aImageS.length - 1)) {
+                    imageDIv.style.left = 0;
+                    currentIndex = 1;
+                }
+            } else {
+                currentIndex--;
+            }
+            changeImage();
+        }
+
+        function changeImage()
+        {
+            for(var i = 0; i < aNumberS.length; ++i)
+            {
+                aNumberS[i].className = "";
+            }
+            aNumberS[currentIndex >= aNumberS.length?0:currentIndex].className = "selected";
+            animate(imageDIv,{left: -currentIndex * 520});
+        }
+
+        play();
+
+        container.onmouseover = function()
+        {
+            clearInterval(timer);
+        }
+
+        container.onmouseout = function()
+        {
+            timer = setInterval(function(){
+                next.onclick();
+            }, 1000);
+        }
+
+        function play()
+        {
+            timer = setInterval(function(){
+                next.onclick();
+            }, 1000);
+        }
+
+    </script>
+</body>
+</html>
