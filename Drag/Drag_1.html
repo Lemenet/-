@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>单元素拖拽</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #div1{
+            width: 100px;
+            height: 100px;
+            background: #ff0000;
+            cursor: pointer;
+            position: absolute;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="div1">DD</div>
+
+    <script>
+        var oDrag = document.getElementById("div1");
+        oDrag.onmousedown = function(e)
+        {
+            e = e || window.event;
+            var iDistanceX = e.clientX - oDrag.offsetLeft;
+            var iDistanceY = e.clientY - oDrag.offsetTop;
+
+            document.onmousemove = function(e)
+            {
+                oDrag.style.left = e.clientX - iDistanceX + "px";
+                oDrag.style.top = e.clientY - iDistanceY + "px";
+                return false;
+            }
+        }
+
+        document.onmouseup = function()
+        {
+            document.onmousemove = null;
+        }
+
+    </script>
+</body>
+</html>
