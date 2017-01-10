@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #small{
+            width: 400px;
+            height: 400px;
+            position: relative;
+            float: left;
+            overflow: hidden;
+        }
+        #large{
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+            position: absolute;
+            float: left;
+            opacity: 0;
+            left: 420px;
+        }
+        #largeImage{
+            position: relative;
+        }
+        #box{
+            width: 200px;
+            height: 200px;
+            background: #cccccc;
+            opacity: 0.5;
+            display: none;
+            float: left;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id = "small">
+        <img src="放大镜/1.jpg" alt="" id="smallImage"/>
+        <div id="box"></div>
+    </div>
+    <div id = "large">
+        <img src="放大镜/2.jpg" alt="" id="largeImage"/>
+    </div>
+
+    <script>
+        var oLargeDiv = document.getElementById("large");
+        var oSmallDiv = document.getElementById("small");
+        var oSmallImage = document.getElementById("smallImage");
+        var oLargeImage = document.getElementById("largeImage")
+        var oBox = document.getElementById("box");
+        oBox.centerPointX = 100;
+        oBox.centerPointY = 100;
+        var bInArea = false;
+
+        oSmallDiv.onmouseover = function(){
+            oLargeDiv.style.opacity = 1;
+            oBox.style.display = "block";
+        }
+        oSmallDiv.onmousemove = function(e){
+//            if(IsInArea(e)) {
+//                MoveBox(e);
+//            }
+            e = e || window.event;
+            MoveBox(e);
+            MoveImg(e);
+        }
+
+        oSmallDiv.onmouseout = function(){
+            oLargeDiv.style.opacity = 0;
+            oBox.style.display = "none";
+        }
+
+//        function IsInArea(e){
+//            if(e.clientX > oSmallDiv.offsetLeft && e.clientX < (oSmallDiv.offsetLeft+oSmallDiv.offsetWidth))
+//            {
+//                if(e.clientY > oSmallDiv.offsetTop && e.clientY < (oSmallDiv.offsetTop + oSmallDiv.offsetHeight))
+//                {
+//                    return true;
+//                }
+//            } else {
+//                return false;
+//            }
+//        }
+
+        function MoveImg(e) {
+            e = e || window.event;
+            var leftDis = e.clientX - oSmallDiv.offsetLeft;
+            var topDIs = e.clientY - oSmallDiv.offsetTop;
+            var leftScale = leftDis / oSmallDiv.offsetWidth;
+            var topScale = topDIs / oSmallDiv.offsetHeight;
+
+            oLargeImage.style.left = -leftScale * oLargeImage.offsetWidth + oLargeDiv.offsetWidth/2 + "px";
+            oLargeImage.style.top = -topScale * oLargeImage.offsetHeight + oLargeDiv.offsetHeight/2 + "px";
+        }
+
+
+        function MoveBox(e){
+            e = e || window.event;
+            oBox.style.left = e.clientX - oBox.centerPointX + "px";
+            oBox.style.top = e.clientY - oBox.centerPointY + "px";
+        }
+    </script>
+</body>
+</html>
